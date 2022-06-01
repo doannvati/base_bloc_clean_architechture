@@ -1,5 +1,7 @@
-on: push
-name: Test, Build and Release apk
+name: test
+on:
+  push:
+    tags:  [ test_tag2 ]
 jobs:
   build:
     name: Build APK
@@ -14,9 +16,9 @@ jobs:
           flutter-version: '3.0.1'
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build apk --flavor dev -t lib/main_dev.dart --debug --split-per-abi
-      - name: Create a Release APK
+      - run: flutter build apk --flavor dev -t lib/main_dev.dart --debug
+      - name: Create a Release APK 😁
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
-          token: ${{ secrets.TOKEN }}
+          artifacts: "build/app/outputs/apk/debug/app.apk"
+          token: ${{ secrets.GITHUB_TOKEN }}
